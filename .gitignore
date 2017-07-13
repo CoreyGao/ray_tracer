@@ -2,3 +2,5 @@ build
 lib/*
 bin/*
 test/*.o
+core
+cscope.out
