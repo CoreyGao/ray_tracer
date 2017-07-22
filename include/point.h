@@ -12,6 +12,7 @@ namespace Graphics{
             ~Point2D(){}
     };
 
+
     class Point3D{
         public:
             double x, y, z;
@@ -28,19 +29,23 @@ namespace Graphics{
                 return Point3D(-x, -y, -z);
             }
 
-            inline Point3D operator + (const Point3D& p) const {
-                Point3D t = *this;
-                t += p;
-                return t;
-            }
-
-            inline Point3D operator - (const Point3D& p) const {
-                Point3D t = *this;
+            inline Math::Vector3D operator - (const Point3D& p) const {
+                return Math::Vector3D(x - p.x, y - p.y, z - p.z);
+                /*Point3D t = *this;
                 t -= p;
+                return t;*/
+            }
+
+            inline Point3D operator + (const Math::Vector3D& p) const {
+                Point3D t = *this;
+                t.x += p.x;
+                t.y += p.y;
+                t.z += p.z;
                 return t;
             }
 
-            inline Point3D operator * (double scale) const {
+
+            /*inline Point3D operator * (double scale) const {
                 Point3D t = *this;
                 t *= scale;
                 return t;
@@ -75,7 +80,7 @@ namespace Graphics{
                 x /= r;
                 y /= r;
                 z /= r;
-            }
+            }*/
 
             inline bool operator == (const Point3D &p) const{
                 return x == p.x && y == p.y && z== p.z;

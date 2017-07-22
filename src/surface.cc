@@ -9,11 +9,11 @@ namespace Graphics
     bool Triangle::IntersectWithRay(const Ray &r, IntersectInfo &info) const
     {
         Point3D e = r.GetPoint(0);
-        Point3D d = r.GetPoint(1);
-        d -= e;
-        Point3D ab = a - b;
-        Point3D ac = a - c;
-        Point3D ae = a - e;
+        Vector3D d = r.GetPoint(1) - e;
+
+        Vector3D ab = a - b;
+        Vector3D ac = a - c;
+        Vector3D ae = a - e;
 
         double detA = Matrix33(ab.x, ac.x, d.x, ab.y, ac.y, d.y, ab.z, ac.z, d.z).Det();
 

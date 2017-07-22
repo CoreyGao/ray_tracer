@@ -41,8 +41,7 @@ namespace Graphics{
             inline double GetEndRatio() const{return m_ratioEnd;}
             inline bool IsPointOnRay(const Graphics::Point3D &p) const
             {
-                Graphics::Point3D p1 = p - m_pointStart;
-                Math::Vector3D ps(p1.x, p1.y, p1.z);
+                Math::Vector3D ps = p - m_pointStart;
 
                 if(ps.Unit() == m_dir){
                     return ps.Norm() >= m_ratioStart && ps.Norm() <= m_ratioEnd;
