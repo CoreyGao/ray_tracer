@@ -3,6 +3,11 @@
 #include <vector>
 #include <memory>
 #include "GL/glut.h"
+#include "math/Point.h"
+
+#ifdef TESTER
+#include "gtest/gtest_prod.h"
+#endif
 
 namespace Math{
     class Vector3D;
@@ -17,14 +22,31 @@ namespace Graphics{
     class Ray;
 }
 
-namespace RayTracer{
-    class Render{
+namespace Graphics{
+    class Render
+    {
         public:
-            Render() = default;
-            ~Render() = default;
+            virtual void Draw(const Scene &scene) = 0;
 
-            void Draw(const Graphics::Camera &camera, const Graphics::Scene &scene);
+            inline void SetCamera(const Camera *c)
+            {
+                m_camera = c;
+            }
 
+        protected:
+            const Camera *m_camera;
+    };
+
+    class RayTracer : public Render
+    {
+        public:
+            RayTracer() = default;
+            ~RayTracer() = default;
+
+
+            virtual void Draw(const Graphics::Scene &scene);
+
+        private:
             std::vector<std::vector<Graphics::IntersectInfo>> GetIntersectInfo(
                 const std::vector<std::shared_ptr<Graphics::Surface>> &surfaces, 
                 const std::vector<std::vector<Graphics::Ray> > &rays ) const;
@@ -32,10 +54,11 @@ namespace RayTracer{
             void CalculateColor(const Graphics::IntersectInfo &info, 
                     Graphics::RGB &rgb, const Graphics::Scene &scene) const;
 
-            Graphics::RGB DiffuseColor(const Graphics::RGB &k , const Graphics::RGB &i, 
-                    const Math::Vector3D &l, const Math::Vector3D &n) const;
-            Graphics::RGB SpecularColor(const Graphics::RGB &k, const Graphics::RGB &i, 
-                    const Math::Vector3D &l, const Math::Vector3D &n, const Math::Vector3D &v, double factor) const;
-            Graphics::RGB AmbientColor(const Graphics::RGB &k, const Graphics::RGB &i) const;
+            void CalRays(std::vector<std::vector<Graphics::Ray>> &rays);
+
+#ifdef TESTER
+    friend class RayTracerTest;
+    FRIEND_TEST(RayTracerTest, test1);
+#endif
     };
 }

@@ -44,8 +44,7 @@ tester: $(TESTOBJECTS) $(OBJECTS)
 	$(CC) $(TESTOBJECTS) $(OBJECTS) $(CFLAGS) $(TESTINC) $(TESTLIB) -o bin/tester
 
 $(TESTDIR)/%.o: $(TESTDIR)/%.$(SRCEXT)
-	@echo " $(CC) $(CFLAGS) $(TESTINC) -c -o $@ $<"; 
-	$(CC) $(CFLAGS) $(TESTINC) -c -o $@ $<
+	$(CC) -D TESTER  $(CFLAGS) $(TESTINC) -c -o $@ $<
 
 
 #   # Spikes

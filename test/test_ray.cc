@@ -3,7 +3,7 @@
 
 
 using Graphics::Ray;
-using Graphics::Point3D;
+using Math::Point3D;
 using Math::Vector3D;
 
 const int START_RATIO = -300;

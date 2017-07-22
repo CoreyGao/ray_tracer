@@ -12,23 +12,23 @@
 #include "GL/glut.h"
 
 
-using RayTracer::Render;
 using namespace Math;
 using namespace Graphics;
 using std::vector;
 using std::shared_ptr;
 using std::make_shared;
 
-Render render;
+RayTracer render;
 Scene scene; 
 Camera camera(PI/2, 0.5, 300, 300);
 Material mat = {RGB(0, 0, 0), RGB(1, 0.5, 0.5), RGB(0.1, 0.1, 0.1), 10};
 
 void display(void) {
-    render.Draw(camera, scene);
+    render.Draw(scene);
 }
 
 void init(){
+    render.SetCamera(&camera);
     auto t = make_shared<Triangle>(mat, Point3D(-1, -1, -1), Point3D(-1, 1, -1), Point3D(-1, 0, 1));
     scene.AddSurface(t);
 

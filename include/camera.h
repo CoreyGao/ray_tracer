@@ -12,21 +12,6 @@ namespace Graphics{
         public:
             Camera(double fov, double focalLen, int horizontalPixNum, int verticalPixNum);
 
-            inline const std::vector<std::vector<Graphics::Ray>> & GetRays() const{
-                return m_rays;
-            }
-
-            inline const std::vector<std::vector<Math::Point3D>> & GetPoints() const{
-                return m_points;
-            }
-
-            inline void SetCanvasOrthogonal(){
-                m_canvasFixed = false;
-            }
-            inline void SetCanvasFixed(){
-                m_canvasFixed = true;
-            }
-
             inline int GetHorizontolPixNum() const{
                 return m_horizontalPixNum;
             }
@@ -35,19 +20,36 @@ namespace Graphics{
                 return m_verticalPixNum;
             }
 
-        private:
-            void CalRays();
+            inline double GetFocalLen() const{
+                return m_focalLen;
+            }
+
+            inline double GetFov() const{
+                return m_fov;
+            }
+
+            inline const Math::Vector3D &GetU() const{
+                return m_u;
+            }
+
+            inline const Math::Vector3D &GetV() const{
+                return m_v;
+            }
+
+            inline const Math::Vector3D &GetW() const{
+                return m_w;
+            }
+
+            inline const Math::Point3D &GetPos() const{
+                return m_pos;
+            }
 
         private:
             double m_fov;
             double m_focalLen;
             int m_horizontalPixNum, m_verticalPixNum;
-            bool m_canvasFixed;
-
             Math::Vector3D m_u, m_v, m_w;
             Math::Point3D m_pos;
-            std::vector<std::vector<Graphics::Ray>> m_rays;
-            std::vector<std::vector<Math::Point3D>> m_points;
     };
 
 
