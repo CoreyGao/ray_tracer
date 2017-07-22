@@ -1,12 +1,12 @@
 #pragma once
 
-#include "point.h"
+#include "math/Point.h"
 
 namespace Graphics{
     class Ray{
         public:
             Ray() = default;
-            Ray(const Point3D &ps, const Point3D &pt, double rs, double re)
+            Ray(const Math::Point3D &ps, const Math::Point3D &pt, double rs, double re)
                 :m_pointStart(ps), m_pointT(pt), m_ratioStart(rs), m_ratioEnd(re),
                 m_dir(pt.x - ps.x, pt.y - ps.y, pt.z - ps.z)
             {
@@ -19,7 +19,7 @@ namespace Graphics{
                 m_ratioStart(r.m_ratioStart), m_ratioEnd(r.m_ratioEnd),
                 m_dir(r.m_dir){ }
 
-            Ray(const Point3D &ps, const Math::Vector3D &dir, double rs, double re)
+            Ray(const Math::Point3D &ps, const Math::Vector3D &dir, double rs, double re)
                 :m_pointStart(ps), 
                 m_pointT(m_pointStart.x + dir.x, m_pointStart.y + dir.y, m_pointStart.z + dir.z),
                 m_ratioStart(rs), m_ratioEnd(re), m_dir(dir)
@@ -27,7 +27,7 @@ namespace Graphics{
                 m_dir.Normalize();
             }
 
-            inline Point3D GetPoint(double r) const
+            inline Math::Point3D GetPoint(double r) const
             {
                 return m_pointStart + (m_pointT - m_pointStart) * r;
             }
@@ -39,7 +39,7 @@ namespace Graphics{
 
             inline double GetStartRatio() const{return m_ratioStart;}
             inline double GetEndRatio() const{return m_ratioEnd;}
-            inline bool IsPointOnRay(const Graphics::Point3D &p) const
+            inline bool IsPointOnRay(const Math::Point3D &p) const
             {
                 Math::Vector3D ps = p - m_pointStart;
 
@@ -51,7 +51,7 @@ namespace Graphics{
 
 
         private:
-            const Point3D m_pointStart, m_pointT;
+            const Math::Point3D m_pointStart, m_pointT;
             double m_ratioStart, m_ratioEnd;
             Math::Vector3D m_dir;
     };

@@ -16,7 +16,7 @@ namespace Graphics{
                 return m_rays;
             }
 
-            inline const std::vector<std::vector<Graphics::Point3D>> & GetPoints() const{
+            inline const std::vector<std::vector<Math::Point3D>> & GetPoints() const{
                 return m_points;
             }
 
@@ -45,9 +45,9 @@ namespace Graphics{
             bool m_canvasFixed;
 
             Math::Vector3D m_u, m_v, m_w;
-            Graphics::Point3D m_pos;
+            Math::Point3D m_pos;
             std::vector<std::vector<Graphics::Ray>> m_rays;
-            std::vector<std::vector<Graphics::Point3D>> m_points;
+            std::vector<std::vector<Math::Point3D>> m_points;
     };
 
 
