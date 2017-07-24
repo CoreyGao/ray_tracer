@@ -27,6 +27,43 @@ void display(void) {
     render.Draw(scene);
 }
 
+void process_key(unsigned char key, int x, int y)
+{
+    switch(key)
+    {
+        case 119: //w
+            camera.Move(Vector3D(-0.1, 0, 0));
+            display();
+            break;
+
+        case 97: //a
+            camera.Move(Vector3D(0, 0.1, 0));
+            display();
+            break;
+
+        case 115: //s
+            camera.Move(Vector3D(0.1, 0, 0));
+            display();
+            break;
+
+        case 100: //d
+            camera.Move(Vector3D(0, -0.1, 0));
+            display();
+            break;
+
+        case 101: //e
+            camera.RotateRoundZ(PI / 30);
+            display();
+            break;
+
+        case 113: //q
+            camera.RotateRoundZ(-PI / 30);
+            display();
+            break;
+    }
+}
+
+
 void init(){
     render.SetCamera(&camera);
     auto t = make_shared<Triangle>(mat, Point3D(-1, -1, -1), Point3D(-1, 1, -1), Point3D(-1, 0, 1));
@@ -53,6 +90,8 @@ int main(int argc, char **argv){
     glClearColor(0.0, 0.0, 0.0, 0.0);
     glutCreateWindow("dadada");
     glutDisplayFunc(display);
+
+    glutKeyboardFunc(process_key);
     glutMainLoop();
 
     return 0;

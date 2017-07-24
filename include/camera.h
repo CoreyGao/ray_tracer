@@ -2,13 +2,16 @@
 #include "ray.h"
 #include <vector>
 #include <memory>
+#include "transform.h"
 
 namespace Graphics{
+
     class Surface;
     class IntersectInfo;
     class RGB;
 
-    class Camera{
+    class Camera : public Transform
+    {
         public:
             Camera(double fov, double focalLen, int horizontalPixNum, int verticalPixNum);
 
@@ -29,15 +32,15 @@ namespace Graphics{
             }
 
             inline const Math::Vector3D &GetU() const{
-                return m_u;
+                return m_basis[1];
             }
 
             inline const Math::Vector3D &GetV() const{
-                return m_v;
+                return m_basis[2];
             }
 
             inline const Math::Vector3D &GetW() const{
-                return m_w;
+                return m_basis[0];
             }
 
             inline const Math::Point3D &GetPos() const{
@@ -48,8 +51,6 @@ namespace Graphics{
             double m_fov;
             double m_focalLen;
             int m_horizontalPixNum, m_verticalPixNum;
-            Math::Vector3D m_u, m_v, m_w;
-            Math::Point3D m_pos;
     };
 
 

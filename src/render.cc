@@ -123,7 +123,6 @@ void RayTracer::CalRays(std::vector<std::vector<Graphics::Ray>> &rays){
     Vector3D pLeftDownInUVW(-m_camera->GetFocalLen(), -canvasHalfU, -canvasHalfV);
 
     Matrix33 transfer(m_camera->GetW(), m_camera->GetU(), m_camera->GetV());
-    transfer = transfer.Inverse();
 
     rays.resize(m_camera->GetVerticalPixNum());
 
@@ -133,6 +132,7 @@ void RayTracer::CalRays(std::vector<std::vector<Graphics::Ray>> &rays){
             double posV = pLeftDownInUVW.z + canvasHalfV * (j + 0.5) / (m_camera->GetVerticalPixNum()/ 2);
 
             Vector3D p(pLeftDownInUVW.x, posU, posV);
+            p = transfer * p;
             rays[j].push_back(Ray(m_camera->GetPos(), p, 0, 1000));
         }
     }
