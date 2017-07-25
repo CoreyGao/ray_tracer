@@ -1,4 +1,4 @@
-#include "render.h"
+#include "raytracer.h"
 #include "camera.h"
 #include "scene.h"
 #include "color.h"
@@ -52,7 +52,22 @@ namespace Graphics{
 
         vector<vector<Graphics::Ray>> rays;
         r.CalRays(rays);
-        vector<vector<IntersectInfo>> infos = r.GetIntersectInfo(scene.GetSurfaces(), rays);
+        vector<shared_ptr<RaytracerSurfaceInterface>> interfaces;
+
+        vector<shared_ptr<Surface>> surfaces = scene.GetSurfaces();
+        for(auto s:surfaces)
+        {
+            shared_ptr<Triangle> ri = dynamic_pointer_cast<Triangle>(s);
+            if(ri)
+                interfaces.push_back(make_shared<RayTracerTriangle>(*ri));
+
+            shared_ptr<Sphere> si = dynamic_pointer_cast<Sphere>(s);
+            if(si)
+                interfaces.push_back(make_shared<RayTracerSphere>(*si));
+        }
+
+
+        vector<vector<IntersectInfo>> infos = r.GetIntersectInfo(interfaces, rays);
         for(auto infoRow : infos)
         {
             for(auto info : infoRow)

@@ -7,31 +7,17 @@
 
 namespace Graphics{
     class Material;
-    class IntersectInfo{
+
+    class Surface
+    {
         public:
-            double ratio;
-            Graphics::Ray r;
-            Math::Point3D interPoint;
-            Math::Vector3D surfaceNormal;
-            const Material &mat; 
-
-            IntersectInfo(const Material &m, Graphics::Ray r):ratio(0), r(r), interPoint(), surfaceNormal(), mat(m){}
-
-            //urgly
-            IntersectInfo(const Material &m):ratio(0), r(), interPoint(), surfaceNormal(), mat(m){}
-            inline bool IsEmpty() const{
-                return ratio == 0 && interPoint== Math::Point3D() && surfaceNormal== Math::Vector3D();
+            Surface(const Material &m):m_mat(m)
+            {
             }
-    };
-
-    class Surface{
-        public:
-            Surface(const Material &m):m_mat(m){}
             virtual ~Surface()
             {
             }
-            virtual bool IntersectWithRay(const Graphics::Ray &r, IntersectInfo &info) const = 0;
-            virtual Math::Vector3D GetNormal(const Math::Point3D& p) = 0;
+            virtual Math::Vector3D GetNormal(const Math::Point3D& p) const = 0;
             const Material &GetMaterial() const{return m_mat;};
 
         private:
@@ -47,13 +33,26 @@ namespace Graphics{
                 normal = Cross(Math::Vector3D(b.x - a.x, b.y - a.y, b.z - a.z), Math::Vector3D(c.x - a.x, c.y - a.y, c.z - a.z));
                 normal.Normalize();
             }
-            Triangle(const Triangle &t):Surface(t), a(t.a), b(t.b), c(t.c){}
+            Triangle(const Triangle &t):Surface(t), a(t.a), b(t.b), c(t.c), normal(t.normal){}
             virtual ~Triangle()
             {
 
             }
-            virtual Math::Vector3D GetNormal(const Math::Point3D &p);
-            virtual bool IntersectWithRay(const Graphics::Ray &r, IntersectInfo &info) const;
+            virtual Math::Vector3D GetNormal(const Math::Point3D &p) const;
+            inline const Math::Point3D &GetVertexA() const
+            {
+                return a;
+            }
+
+            inline const Math::Point3D &GetVertexB() const
+            {
+                return b;
+            }
+
+            inline const Math::Point3D &GetVertexC() const
+            {
+                return c;
+            }
 
         private:
             Math::Point3D a,b,c;
@@ -64,11 +63,20 @@ namespace Graphics{
         public:
             Sphere(const Material &m, const Math::Point3D &c, double r)
                 :Surface(m), center(c), radius(r){}
-            virtual Math::Vector3D GetNormal(const Math::Point3D& p);
+            virtual Math::Vector3D GetNormal(const Math::Point3D& p) const;
             virtual ~Sphere()
             {
             }
-            virtual bool IntersectWithRay(const Graphics::Ray &r, IntersectInfo &info) const;
+
+            inline double GetRadius() const
+            {
+                return radius;
+            }
+
+            inline const Math::Point3D &GetCenter() const
+            {
+                return center;
+            }
 
         private:
             Math::Point3D center;

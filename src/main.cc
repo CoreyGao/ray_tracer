@@ -1,5 +1,5 @@
 #ifndef TESTER
-#include "render.h"
+#include "raytracer.h"
 #include "camera.h"
 #include "light.h"
 #include "scene.h"
