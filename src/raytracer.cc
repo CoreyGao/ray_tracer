@@ -230,7 +230,7 @@ void RayTracer::CalRays(std::vector<std::vector<Graphics::Ray>> &rays){
             double posU = pLeftDownInUVW.y + canvasHalfU * (i + 0.5) / (m_camera->GetHorizontolPixNum()/ 2);
             double posV = pLeftDownInUVW.z + canvasHalfV * (j + 0.5) / (m_camera->GetVerticalPixNum()/ 2);
 
-            Point3D p(pLeftDownInUVW.x, posU, posV);
+            Vector3D p(pLeftDownInUVW.x, posU, posV);
             p =  transfer * p;
             rays[j].push_back(Ray(m_camera->GetPos(), p, 0, 1000));
         }

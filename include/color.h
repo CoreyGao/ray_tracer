@@ -3,7 +3,7 @@
 namespace Graphics{
     class RGB{
         public:
-            double r,g,b;
+            float r,g,b;
             RGB(const RGB &r):r(r.r), g(r.g), b(r.b){}
             RGB():r(0), g(0), b(0){}
             RGB(double r, double g, double b): r(r), g(g), b(b){}
@@ -20,7 +20,7 @@ namespace Graphics{
                 b += rgb.b;
             }
 
-            RGB operator * (double k){
+            RGB operator * (float k){
                 RGB result = *this;
                 result.r = r * k;
                 result.g = g * k;
