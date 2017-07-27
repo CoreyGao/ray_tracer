@@ -1,7 +1,7 @@
 #pragma once
 
-#include "math/Matrix33.h"
-#include "math/Vector3D.h"
+#include "math/Matrix.h"
+#include "math/Vector.h"
 #include "math/Point.h"
 
 namespace Graphics

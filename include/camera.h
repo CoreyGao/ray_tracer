@@ -1,4 +1,6 @@
-#include "math/Vector3D.h"
+#pragma once
+
+#include "math/Vector.h"
 #include "ray.h"
 #include <vector>
 #include <memory>
@@ -15,36 +17,29 @@ namespace Graphics{
         public:
             Camera(double fov, double focalLen, int horizontalPixNum, int verticalPixNum);
 
-            inline int GetHorizontolPixNum() const{
+            inline int GetHorizontolPixNum() const
+            {
                 return m_horizontalPixNum;
             }
 
-            inline int GetVerticalPixNum() const{
+            inline int GetVerticalPixNum() const
+            {
                 return m_verticalPixNum;
             }
 
-            inline double GetFocalLen() const{
+            inline double GetFocalLen() const
+            {
                 return m_focalLen;
             }
 
-            inline double GetFov() const{
+            inline double GetFov() const
+            {
                 return m_fov;
             }
 
-            inline const Math::Vector3D &GetU() const{
+            inline Math::Vector<float, 3> &GetU()
+            {
                 return m_basis[1];
-            }
-
-            inline const Math::Vector3D &GetV() const{
-                return m_basis[2];
-            }
-
-            inline const Math::Vector3D &GetW() const{
-                return m_basis[0];
-            }
-
-            inline const Math::Point3D &GetPos() const{
-                return m_pos;
             }
 
         private:

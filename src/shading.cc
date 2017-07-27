@@ -1,5 +1,5 @@
 #include "shading.h"
-#include "math/Vector3D.h"
+#include "math/Vector.h"
 
 using namespace Graphics;
 using namespace Math;

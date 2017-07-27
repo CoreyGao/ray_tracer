@@ -8,6 +8,8 @@
 
 using namespace Graphics;
 using namespace Math;
+using namespace std;
+
 
 namespace Graphics{
 

@@ -7,7 +7,7 @@ namespace Graphics
     Vector3D NonInlinearV(const Vector3D &v)
     {
         Vector3D u = v.Unit();
-        double *min = &u.x;
+        float *min = &u.x;
         min = (abs(*min) < abs(u.y)) ? min : &u.y;
         min = (abs(*min) < abs(u.z)) ? min : &u.z;
         *min = 1;

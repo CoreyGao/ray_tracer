@@ -1,4 +1,4 @@
-#include "../include/scene.h"
+#include "scene.h"
 
 namespace Graphics{
     

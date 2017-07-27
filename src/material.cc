@@ -1,4 +1,4 @@
-#include "../include/surface.h"
+#include "surface.h"
 
 namespace Graphics{
 

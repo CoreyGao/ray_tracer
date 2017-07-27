@@ -10,12 +10,7 @@
 #include "gtest/gtest_prod.h"
 #endif
 
-namespace Math{
-    class Vector3D;
-}
-
 namespace Graphics{
-    class IntersectInfo;
     class Camera;
     class RGB;
     class Scene;
@@ -34,9 +29,22 @@ namespace Graphics
             Math::Vector3D surfaceNormal;
             const Material *mat; 
 
-            IntersectInfo(const Material *m, Graphics::Ray r):ratio(0), r(r), interPoint(), surfaceNormal(), mat(m){}
+            IntersectInfo(const Material *m, const Graphics::Ray &ray)
+                :ratio(0), r(ray), interPoint(), surfaceNormal(), mat(m)
+            {
+            }
 
-            IntersectInfo() = default;
+            IntersectInfo(const IntersectInfo & info)
+                :ratio(info.ratio), r(info.r), interPoint(info.interPoint),
+                surfaceNormal(info.surfaceNormal), mat(info.mat)
+            {
+            }
+
+            IntersectInfo()
+                :ratio(0), r(), interPoint(), surfaceNormal(), mat(nullptr)
+            {
+            }
+
             inline bool IsEmpty() const{
                 return ratio == 0 && interPoint== Math::Point3D() && surfaceNormal== Math::Vector3D();
             }

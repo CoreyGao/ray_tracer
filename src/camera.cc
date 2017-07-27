@@ -1,8 +1,8 @@
-#include "../include/camera.h"
-#include "../include/math/commondef.h"
-#include "../include/math/Matrix33.h"
-#include "../include/surface.h"
-#include "../include/color.h"
+#include "camera.h"
+#include "math/commondef.h"
+#include "math/Matrix.h"
+#include "surface.h"
+#include "color.h"
 #include <cmath>
 
 using std::vector;
@@ -14,5 +14,6 @@ namespace Graphics{
         :m_fov(fov), m_focalLen(focalLen), m_horizontalPixNum(horizontalPixNum),
         m_verticalPixNum(verticalPixNum)
     {
+        m_verticalPixNum = verticalPixNum;
     }
 };

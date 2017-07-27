@@ -1,6 +1,6 @@
-#include "../include/surface.h"
-#include "../include/ray.h"
-#include "../include/math/Matrix33.h"
+#include "surface.h"
+#include "ray.h"
+#include "math/Matrix.h"
 
 using namespace Math;
 

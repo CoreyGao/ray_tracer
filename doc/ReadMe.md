@@ -3,8 +3,8 @@ TODO:
         (relation between raytracer, math, google-test.Now makefile use absolute path of google-test and the git repo of raytracer/include has a symble-link for math)
 
     code:
-        1.find approriate way to organize the relation between Point3D and Vector3D;
-        2.performance improving
+        1.performance improving
+        2.use visitor pattern to reorganize the RayTracerSurfaceInterface
     
     feature:
         1.sphere intersect test code and add sphere rendering

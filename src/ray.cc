@@ -1,5 +1,5 @@
-#include "../include/ray.h"
-#include "../include/math/Vector3D.h"
+#include "ray.h"
+#include "math/Vector.h"
 
 
 namespace Graphics{

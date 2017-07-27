@@ -11,11 +11,11 @@ SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
 
 CFLAGS := -std=c++11 -g -Wall
-LIB := -L lib -lmath -lGL -lglut
+LIB := -L lib -lGL -lglut
 INC := -I include
 
 TESTDIR := test
-TESTLIB := -L lib -L/home/gc/Work/google-test/googletest/googletest -lgtest -lpthread -lGL -lglut -lmath
+TESTLIB := -L lib -L/home/gc/Work/google-test/googletest/googletest -lgtest -lpthread -lGL -lglut 
 TESTINC := -I include -I/home/gc/Work/google-test/googletest/googletest/include
 TESTSOURCES := $(shell find $(TESTDIR) -type f -name *.$(SRCEXT))
 TESTOBJECTS := $(patsubst $(TESTDIR)/%, $(TESTDIR)/%, $(TESTSOURCES:.$(SRCEXT)=.o))

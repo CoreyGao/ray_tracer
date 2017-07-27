@@ -3,17 +3,20 @@
 #include "camera.h"
 #include "color.h"
 #include "scene.h"
-#include "math/Vector3D.h"
-#include "math/Matrix33.h"
+#include "math/Vector.h"
+#include "math/Matrix.h"
 #include "shading.h"
 #include <GL/glut.h>
 #include <iostream>
 
 
 using namespace Graphics;
-using std::vector;
-using std::shared_ptr;
 using namespace Math;
+
+using std::make_shared;
+using std::shared_ptr;
+using std::dynamic_pointer_cast;
+using std::vector;
 
 
 bool RayTracerTriangle::IntersectWithRay(const Ray &r, IntersectInfo &info) const
@@ -47,6 +50,8 @@ bool RayTracerTriangle::IntersectWithRay(const Ray &r, IntersectInfo &info) cons
     info.interPoint = r.GetPoint(t);
     info.surfaceNormal = GetNormal(info.interPoint);
     info.ratio = t;
+    info.mat = &m_mat;
+    info.r = r;
 
     return true;
 }
@@ -170,19 +175,17 @@ vector<vector<IntersectInfo>> RayTracer::GetIntersectInfo(
     {
         for(auto ray : rows)
         {
-            IntersectInfo *min = nullptr;
+            IntersectInfo minInfo;
 
+            IntersectInfo info;
             for(auto p_surface : surfaces)
             {
-                IntersectInfo info(&p_surface->GetMaterial(), ray);
                 if(p_surface->IntersectWithRay(ray, info)){
-                    if(!min)
-                        min = &info;
-                    else if(min->ratio > info.ratio)
-                        min = &info;
+                    if(minInfo.IsEmpty() || minInfo.ratio > info.ratio)
+                        minInfo = info;
                 }
             }
-            infoList[infoListRow].push_back(min?*min:IntersectInfo());
+            infoList[infoListRow].push_back(minInfo);
         }
         infoListRow++;
     }
@@ -218,7 +221,7 @@ void RayTracer::CalRays(std::vector<std::vector<Graphics::Ray>> &rays){
 
     Vector3D pLeftDownInUVW(-m_camera->GetFocalLen(), -canvasHalfU, -canvasHalfV);
 
-    Matrix33 transfer(m_camera->GetW(), m_camera->GetU(), m_camera->GetV());
+    const Matrix33 &transfer = m_camera->GetBasis();
 
     rays.resize(m_camera->GetVerticalPixNum());
 
@@ -227,8 +230,8 @@ void RayTracer::CalRays(std::vector<std::vector<Graphics::Ray>> &rays){
             double posU = pLeftDownInUVW.y + canvasHalfU * (i + 0.5) / (m_camera->GetHorizontolPixNum()/ 2);
             double posV = pLeftDownInUVW.z + canvasHalfV * (j + 0.5) / (m_camera->GetVerticalPixNum()/ 2);
 
-            Vector3D p(pLeftDownInUVW.x, posU, posV);
-            p = transfer * p;
+            Point3D p(pLeftDownInUVW.x, posU, posV);
+            p =  transfer * p;
             rays[j].push_back(Ray(m_camera->GetPos(), p, 0, 1000));
         }
     }

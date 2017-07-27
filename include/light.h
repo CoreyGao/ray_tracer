@@ -1,6 +1,6 @@
 #pragma once
 
-#include "math/Vector3D.h"
+#include "math/Vector.h"
 #include "color.h"
 
 namespace Graphics{

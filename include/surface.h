@@ -1,6 +1,6 @@
 #pragma once
 
-#include "math/Vector3D.h"
+#include "math/Vector.h"
 #include "math/Point.h"
 #include "ray.h"
 #include "material.h"
@@ -20,7 +20,7 @@ namespace Graphics{
             virtual Math::Vector3D GetNormal(const Math::Point3D& p) const = 0;
             const Material &GetMaterial() const{return m_mat;};
 
-        private:
+        protected:
             const Material &m_mat;
     };
 

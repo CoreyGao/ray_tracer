@@ -5,7 +5,7 @@
 #include "scene.h"
 #include "material.h"
 #include "surface.h"
-#include "math/Matrix33.h"
+#include "math/Matrix.h"
 #include "math/commondef.h"
 
 #include <iostream>

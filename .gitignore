@@ -3,4 +3,5 @@ lib/*
 bin/*
 test/*.o
 core
-cscope.out
+cscope.*
+perf.*

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "math/Point.h"
+#include "math/Vector.h"
 
 namespace Graphics{
     class Ray{
@@ -12,7 +13,6 @@ namespace Graphics{
             {
                     m_dir.Normalize();
             }
-
 
             Ray(const Ray &r)
                 :m_pointStart(r.m_pointStart), m_pointT(r.m_pointT), 
@@ -27,9 +27,10 @@ namespace Graphics{
                 m_dir.Normalize();
             }
 
-            inline Math::Point3D GetPoint(double r) const
+            inline Math::Point3D GetPoint(float r) const
             {
-                return m_pointStart + (m_pointT - m_pointStart) * r;
+                Math::Point3D p = m_pointStart + (m_pointT - m_pointStart) * r;
+                return p;
             }
 
             inline const Math::Vector3D& GetDir() const
@@ -49,9 +50,18 @@ namespace Graphics{
                 return false;
             }
 
+            void operator = (const Ray &r)
+            {
+                m_pointStart = r.m_pointStart;
+                m_pointT = r.m_pointT;
+                m_ratioStart = r.m_ratioStart;
+                m_ratioEnd = r.m_ratioEnd;
+                m_dir = r.m_dir;
+            }
+
 
         private:
-            const Math::Point3D m_pointStart, m_pointT;
+            Math::Point3D m_pointStart, m_pointT;
             double m_ratioStart, m_ratioEnd;
             Math::Vector3D m_dir;
     };
