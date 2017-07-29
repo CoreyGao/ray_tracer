@@ -10,42 +10,45 @@ namespace Graphics{
 
     class Surface;
     class IntersectInfo;
-    class RGB;
 
     class Camera : public Transform
     {
         public:
-            Camera(double fov, double focalLen, int horizontalPixNum, int verticalPixNum);
+            Camera(float fov, float near, float far, int horizontalPixNum, int verticalPixNum)
+                :m_fov(fov), m_near(near), m_far(far), m_horizontalPixNum(horizontalPixNum),
+                m_verticalPixNum(verticalPixNum)
+            {
+            }
 
-            inline int GetHorizontolPixNum() const
+            inline unsigned int GetHorizontolPixNum() const
             {
                 return m_horizontalPixNum;
             }
 
-            inline int GetVerticalPixNum() const
+            inline unsigned int GetVerticalPixNum() const
             {
                 return m_verticalPixNum;
             }
 
-            inline double GetFocalLen() const
+            inline float GetNearPlane() const
             {
-                return m_focalLen;
+                return m_near;
             }
 
-            inline double GetFov() const
+            inline float GetFarPlane() const
+            {
+                return m_near;
+            }
+
+            inline float GetFov() const
             {
                 return m_fov;
             }
 
-            inline Math::Vector<float, 3> &GetU()
-            {
-                return m_basis[1];
-            }
-
         private:
-            double m_fov;
-            double m_focalLen;
-            int m_horizontalPixNum, m_verticalPixNum;
+            float m_fov;
+            float m_near, m_far;
+            unsigned int m_horizontalPixNum, m_verticalPixNum;
     };
 
 

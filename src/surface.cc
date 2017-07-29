@@ -2,7 +2,8 @@
 #include "ray.h"
 #include "math/Matrix.h"
 
-using namespace Math;
+using Math::Point3D;
+using Math::Vector3D;
 
 namespace Graphics
 {

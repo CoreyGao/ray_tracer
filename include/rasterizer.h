@@ -1,15 +1,66 @@
 #pragma once
 
+#include "common.h"
 #include "render.h"
+#include "color.h"
+#include "ray.h"
+#include "surface.h"
+
+#include <math/Matrix.h>
+
+#include <vector>
+#include <climits>
 
 namespace Graphics
 {
 
+    class Fragment
+    {
+        public:
+            ubyte r, g, b, z;
+
+
+            Fragment()
+                :r(UCHAR_MAX), g(UCHAR_MAX), b(UCHAR_MAX), z(UCHAR_MAX)
+            {
+            }
+
+            ~Fragment()
+            {
+            }
+    };
+
+
+
     class Rasterizer : public Render
     {
-        Rasterizer() = default;
-        ~Rasterizer() = default;
+        public:
+            Rasterizer() { }
+            ~Rasterizer(){}
 
-        virtual void Draw(const Scene &scene);
+            virtual void Draw(const Scene &scene);
+
+        private:
+            void OnCameraChange();
+            void DrawLine(const Ray2D &line);
+            void DrawTriangle(const Triangle &t, std::vector<Fragment> &fragments);
+
+            UBYTE_RGB CalculateColor(const Math::Point3D &p, const Material &mat, 
+                    const Scene &scene, const Math::Vector3D &n);
+            
+
+            void DrawFragments(int x, int y, const UBYTE_RGB &urgb, int z);
+
+
+        private:
+            std::vector<std::vector<Fragment>> m_fragments;
+
+            Math::Matrix44 m_vpT;
+            Math::Matrix44 m_orthoT;
+            Math::Matrix44 m_perspectiveT;
+            Math::Matrix44 m_allT;
+
+            Math::Matrix44 m_camT;
+            Math::Matrix44 m_camInverseT;
     };
 }

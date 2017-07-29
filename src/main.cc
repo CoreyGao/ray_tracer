@@ -11,16 +11,24 @@
 #include <iostream>
 #include "GL/glut.h"
 
-
-using namespace Math;
 using namespace Graphics;
+
 using std::vector;
 using std::shared_ptr;
 using std::make_shared;
 
+using Math::PI;
+using Math::Point3D;
+using Math::Vector3D;
+using Math::Matrix33;
+
+
+const int HORIZONTAL_PIX_NUM = 300;
+const int VERTICAL_PIX_NUM = 300;
+
 RayTracer render;
 Scene scene; 
-Camera camera(PI/2, 0.5, 300, 300);
+Camera camera(PI/2, 0.2f, 10.0f, HORIZONTAL_PIX_NUM, VERTICAL_PIX_NUM);
 Material mat = {RGB(0, 0, 0), RGB(1, 0.5, 0.5), RGB(0.1, 0.1, 0.1), 10};
 
 void display(void) {
@@ -85,7 +93,7 @@ int main(int argc, char **argv){
     display();
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
-    glutInitWindowSize(300, 300);
+    glutInitWindowSize(HORIZONTAL_PIX_NUM, VERTICAL_PIX_NUM);
     glutInitWindowPosition(100, 100);
     glClearColor(0.0, 0.0, 0.0, 0.0);
     glutCreateWindow("dadada");

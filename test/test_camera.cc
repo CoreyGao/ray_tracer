@@ -1,15 +1,11 @@
 #include "camera.h"
 #include <gtest/gtest.h>
-#include "math/commondef.h"
-#include <vector>
-#include "ray.h"
-#include <cmath>
 
-using namespace Graphics;
-using namespace ::std;
+using Graphics::Camera;
+
 TEST(CameraTest, testall){
-    Camera c(Math::PI / 2, 1, 10, 10);
+    Camera c(Math::PI / 2, 0.2, 100, 10, 10);
 
-    EXPECT_EQ(10, c.GetHorizontolPixNum());
-    EXPECT_EQ(10, c.GetVerticalPixNum());
+    EXPECT_EQ((unsigned int)10, c.GetHorizontolPixNum());
+    EXPECT_EQ((unsigned int)10, c.GetVerticalPixNum());
 }

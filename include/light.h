@@ -7,6 +7,7 @@ namespace Graphics{
     class Light{
         public:
             RGB intensity;
+
             Light(const RGB &c):intensity(c) {}
             Light(){}
             ~Light() {}

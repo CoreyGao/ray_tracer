@@ -2,8 +2,8 @@
 #include "tools.h"
 #include <cmath>
 
-using namespace Math;
-using namespace std;
+using Math::Vector3D;
+using Math::Matrix33;
 
 namespace Graphics
 {

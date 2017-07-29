@@ -1,9 +1,11 @@
 #pragma once
 
 #include "render.h"
+#include "surface.h"
+#include "ray.h"
+
 #include <vector>
 #include <memory>
-#include "surface.h"
 
 
 #ifdef TESTER
@@ -12,10 +14,8 @@
 
 namespace Graphics{
     class Camera;
-    class RGB;
     class Scene;
     class Surface;
-    class Ray;
 }
 
 namespace Graphics

@@ -6,7 +6,7 @@ using Graphics::Ray;
 using Math::Point3D;
 using Math::Vector3D;
 
-const int START_RATIO = -300;
+const int START_RATIO = 0;
 const int END_RATIO = 300;
 
 
@@ -18,10 +18,6 @@ class RayTest : public ::testing::Test
             pStart.x = -21.5;
             pStart.y = 2;
             pStart.z = 0;
-
-            pT.x = 3.7;
-            pT.y = 5.5;
-            pT.z = -11;
 
             dir.x = 25.2;
             dir.y = 3.5;
@@ -45,7 +41,6 @@ class RayTest : public ::testing::Test
 
 
         Point3D pStart;
-        Point3D pT;
         Point3D pInLine;
         Point3D pOffLine;
         Vector3D dir;
@@ -53,7 +48,7 @@ class RayTest : public ::testing::Test
 
 TEST_F(RayTest, AllInOne)
 {
-    Ray r(pStart, pT, START_RATIO, END_RATIO);
+    Ray r(pStart, dir, START_RATIO, END_RATIO);
     Ray rCopy(r);
     Ray rDir(pStart, dir, START_RATIO, END_RATIO);
 

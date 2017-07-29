@@ -6,10 +6,15 @@
 #include <gtest/gtest.h>
 #include "shading.h"
 
-using namespace Graphics;
-using namespace Math;
-using namespace std;
+using Math::PI;
+using Math::Point3D;
+using Math::Vector3D;
+using Math::almost_equal;
 
+using std::make_shared;
+using std::shared_ptr;
+using std::vector;
+using std::dynamic_pointer_cast;
 
 namespace Graphics{
 
@@ -19,7 +24,7 @@ namespace Graphics{
     };
 
     TEST_F(RayTracerTest, test1){
-        Camera camera(PI/2, 0.5, 10, 10);
+        Camera camera(PI/2, 0.2, 50, 10, 10);
 
         r.SetCamera(&camera);
         Material mat = {RGB(0.1, 0.1, 0.1), RGB(0.5, 0.5, 0.5), RGB(0.1, 0.1, 0.1), 10};
@@ -34,19 +39,19 @@ namespace Graphics{
 
 
         RGB dResult = Shading::DiffuseColor(mat.k_diffuse, d.intensity, d.dir, t->GetNormal(Point3D(0, 0, 0)));
-        EXPECT_TRUE(almost_equal(0.025, dResult.r, 1));
-        EXPECT_TRUE(almost_equal(0.02, dResult.g, 1));
-        EXPECT_TRUE(almost_equal(0.015, dResult.b, 1));
+        EXPECT_TRUE(almost_equal(0.025f, dResult.r, 1));
+        EXPECT_TRUE(almost_equal(0.02f, dResult.g, 1));
+        EXPECT_TRUE(almost_equal(0.015f, dResult.b, 1));
 
         RGB sResult = Shading::SpecularColor(mat.k_specular, s.intensity, s.dir, t->GetNormal(Point3D(0, 0, 0)), Vector3D(-1, -1, 0), 10);
-        EXPECT_TRUE(almost_equal(0.15, sResult.r, 1));
-        EXPECT_TRUE(almost_equal(0.2, sResult.g, 1));
-        EXPECT_TRUE(almost_equal(0.25, sResult.b, 1));
+        EXPECT_TRUE(almost_equal(0.15f, sResult.r, 1));
+        EXPECT_TRUE(almost_equal(0.2f, sResult.g, 1));
+        EXPECT_TRUE(almost_equal(0.25f, sResult.b, 1));
 
         RGB aResult = Shading::AmbientColor(mat.k_ambient, a.intensity);
-        EXPECT_TRUE(almost_equal(0.01, aResult.r, 1));
-        EXPECT_TRUE(almost_equal(0.0, aResult.g, 1));
-        EXPECT_TRUE(almost_equal(0.01, aResult.b, 1));
+        EXPECT_TRUE(almost_equal(0.01f, aResult.r, 1));
+        EXPECT_TRUE(almost_equal(0.0f, aResult.g, 1));
+        EXPECT_TRUE(almost_equal(0.01f, aResult.b, 1));
 
         scene.SetDiffuseLight(d);
         scene.AddSpecularLight(s);
@@ -74,13 +79,13 @@ namespace Graphics{
         {
             for(auto info : infoRow)
             {
-                cout<<info.IsEmpty()<<" ";
+                std::cout<<info.IsEmpty()<<" ";
             }
-            cout<<endl;
+            std::cout<<std::endl;
         }
 
         vector<vector<RGB>> colors(camera.GetVerticalPixNum());
-        for(int i = 0 ; i < camera.GetVerticalPixNum() ; i++)
+        for(unsigned int i = 0 ; i < camera.GetVerticalPixNum() ; i++)
         {
             colors[i].resize(camera.GetVerticalPixNum());
         }
@@ -98,14 +103,14 @@ namespace Graphics{
             rowIndex++;
         }
 
-        cout<<"------------------------------"<<endl;
+        std::cout<<"------------------------------"<<std::endl;
         for(auto colorRow :colors)
         {
             for(auto color:colorRow)
             {
-                cout<<color.r<<" " << color.g<<" " << color.b << "|";
+                std::cout<<color.r<<" " << color.g<<" " << color.b << "|";
             }
-            cout<<endl;
+            std::cout<<std::endl;
         }
     }
 }
