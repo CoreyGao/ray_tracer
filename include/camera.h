@@ -11,6 +11,7 @@ namespace Graphics{
     class Surface;
     class IntersectInfo;
 
+    //camera view direction : -z, so near-plane && far-plane must be negative
     class Camera : public Transform
     {
         public:
@@ -37,7 +38,7 @@ namespace Graphics{
 
             inline float GetFarPlane() const
             {
-                return m_near;
+                return m_far;
             }
 
             inline float GetFov() const

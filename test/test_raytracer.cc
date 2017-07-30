@@ -24,17 +24,17 @@ namespace Graphics{
     };
 
     TEST_F(RayTracerTest, test1){
-        Camera camera(PI/2, 0.2, 50, 10, 10);
+        Camera camera(PI/2, -0.2, -50, 10, 10);
 
         r.SetCamera(&camera);
         Material mat = {RGB(0.1, 0.1, 0.1), RGB(0.5, 0.5, 0.5), RGB(0.1, 0.1, 0.1), 10};
 
         Scene scene; 
-        auto t = make_shared<Triangle>(mat, Point3D(-1, -1, -1), Point3D(-1, 1, -1), Point3D(-1, 0, 1));
+        auto t = make_shared<Triangle>(mat, Point3D(-1, -1, -1), Point3D(1, -1, -1), Point3D(0, 1, -1));
         scene.AddSurface(t);
 
-        DiffuseLight d(RGB(0.5, 0.4, 0.3), Vector3D(-1, sqrt(3), 0));
-        SpecularLight s(RGB(0.3, 0.4, 0.5), Vector3D(-1, 1, 0));
+        DiffuseLight d(RGB(0.5, 0.4, 0.3), Vector3D(0, sqrt(3), -1));
+        SpecularLight s(RGB(0.3, 0.4, 0.5), Vector3D(0, 1, -1));
         AmbientLight a(RGB(0.1, 0.0, 0.1));
 
 
@@ -43,7 +43,7 @@ namespace Graphics{
         EXPECT_TRUE(almost_equal(0.02f, dResult.g, 1));
         EXPECT_TRUE(almost_equal(0.015f, dResult.b, 1));
 
-        RGB sResult = Shading::SpecularColor(mat.k_specular, s.intensity, s.dir, t->GetNormal(Point3D(0, 0, 0)), Vector3D(-1, -1, 0), 10);
+        RGB sResult = Shading::SpecularColor(mat.k_specular, s.intensity, s.dir, t->GetNormal(Point3D(0, 0, 0)), Vector3D(0, -1, -1), 10);
         EXPECT_TRUE(almost_equal(0.15f, sResult.r, 1));
         EXPECT_TRUE(almost_equal(0.2f, sResult.g, 1));
         EXPECT_TRUE(almost_equal(0.25f, sResult.b, 1));

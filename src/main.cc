@@ -7,6 +7,7 @@
 #include "surface.h"
 #include "math/Matrix.h"
 #include "math/commondef.h"
+#include "rasterizer.h"
 
 #include <iostream>
 #include "GL/glut.h"
@@ -26,10 +27,10 @@ using Math::Matrix33;
 const int HORIZONTAL_PIX_NUM = 300;
 const int VERTICAL_PIX_NUM = 300;
 
-RayTracer render;
+Rasterizer render;
 Scene scene; 
-Camera camera(PI/2, 0.2f, 10.0f, HORIZONTAL_PIX_NUM, VERTICAL_PIX_NUM);
-Material mat = {RGB(0, 0, 0), RGB(1, 0.5, 0.5), RGB(0.1, 0.1, 0.1), 10};
+Camera camera(PI/2, -0.2f, -10.0f, HORIZONTAL_PIX_NUM, VERTICAL_PIX_NUM);
+Material mat = {RGB(0, 0, 0), RGB(1, 0, 0), RGB(0.0, 0.0, 0.0), 10};
 
 void display(void) {
     render.Draw(scene);
@@ -40,32 +41,32 @@ void process_key(unsigned char key, int x, int y)
     switch(key)
     {
         case 119: //w
-            camera.Move(Vector3D(-0.1, 0, 0));
+            camera.Move(Vector3D(0, 0, -0.1));
             display();
             break;
 
         case 97: //a
-            camera.Move(Vector3D(0, 0.1, 0));
-            display();
-            break;
-
-        case 115: //s
             camera.Move(Vector3D(0.1, 0, 0));
             display();
             break;
 
+        case 115: //s
+            camera.Move(Vector3D(0, 0, 0.1));
+            display();
+            break;
+
         case 100: //d
-            camera.Move(Vector3D(0, -0.1, 0));
+            camera.Move(Vector3D(-0.1, 0, 0));
             display();
             break;
 
         case 101: //e
-            camera.RotateRoundZ(PI / 30);
+            camera.RotateRoundY(PI / 30);
             display();
             break;
 
         case 113: //q
-            camera.RotateRoundZ(-PI / 30);
+            camera.RotateRoundY(-PI / 30);
             display();
             break;
     }
@@ -74,12 +75,13 @@ void process_key(unsigned char key, int x, int y)
 
 void init(){
     render.SetCamera(&camera);
-    auto t = make_shared<Triangle>(mat, Point3D(-1, -1, -1), Point3D(-1, 1, -1), Point3D(-1, 0, 1));
+    auto t = make_shared<Triangle>(mat, Point3D(-1, -1, -2), 
+            Point3D(1, -1, -2), Point3D(0, 1, -2));
     scene.AddSurface(t);
 
-    DiffuseLight d(RGB(0.5, 0.4, 0.3), Vector3D(-1, sqrt(3), 0));
-    SpecularLight s(RGB(1, 0.0, 0.0), Vector3D(-1, 0, 0));
-    AmbientLight a(RGB(0.1, 0.0, 0.1));
+    DiffuseLight d(RGB(1.0, 1.0, 1.0), Vector3D(0, sqrt(3), -1));
+    SpecularLight s(RGB(1, 1.0, 1.0), Vector3D(0, 0, -1));
+    AmbientLight a(RGB(1.0, 1.0, 1.0));
 
     scene.SetDiffuseLight(d);
     scene.AddSpecularLight(s);

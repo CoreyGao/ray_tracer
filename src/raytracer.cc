@@ -102,9 +102,7 @@ namespace Graphics
     }
 
 
-    GLuint Framebuffer = 0;
-
-    float *texture = nullptr;
+    static float *texture = nullptr;
     static const GLfloat red[] = {1.0, 0.0, 0.0, 1.0};
     void RayTracer::Draw(const Scene &scene)
     {
@@ -219,10 +217,10 @@ namespace Graphics
     void RayTracer::CalRays(std::vector<std::vector<Graphics::Ray>> &rays){
         rays.clear();
 
-        double canvasHalfV =  m_camera->GetNearPlane() * tan(m_camera->GetFov() / 2);
-        double canvasHalfU = m_camera->GetHorizontolPixNum() / m_camera->GetVerticalPixNum()* canvasHalfV;
+        double canvasHalfY = -m_camera->GetNearPlane() * tan(m_camera->GetFov() / 2);
+        double canvasHalfX = m_camera->GetHorizontolPixNum() / m_camera->GetVerticalPixNum()* canvasHalfY;
 
-        Vector3D pLeftDownInUVW(-m_camera->GetNearPlane(), -canvasHalfU, -canvasHalfV);
+        Vector3D pLeftDownInUVW( -canvasHalfX, -canvasHalfY, m_camera->GetNearPlane());
 
         const Matrix33 &transfer = m_camera->GetBasis();
 
@@ -230,10 +228,10 @@ namespace Graphics
 
         for(unsigned int j = 0 ; j < m_camera->GetVerticalPixNum(); j++){
             for(unsigned int i = 0 ; i < m_camera->GetHorizontolPixNum(); i++){
-                double posU = pLeftDownInUVW.y + canvasHalfU * (i + 0.5) / (m_camera->GetHorizontolPixNum()/ 2);
-                double posV = pLeftDownInUVW.z + canvasHalfV * (j + 0.5) / (m_camera->GetVerticalPixNum()/ 2);
+                double posX = pLeftDownInUVW.x + canvasHalfX * (i + 0.5) / (m_camera->GetHorizontolPixNum()/ 2);
+                double posY = pLeftDownInUVW.y + canvasHalfY * (j + 0.5) / (m_camera->GetVerticalPixNum()/ 2);
 
-                Vector3D dir(pLeftDownInUVW.x, posU, posV);
+                Vector3D dir(posX, posY, pLeftDownInUVW.z);
                 dir =  transfer * dir;
                 rays[j].push_back(Ray(m_camera->GetPos(), dir, 0, 1000));
             }

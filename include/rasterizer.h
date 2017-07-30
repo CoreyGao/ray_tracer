@@ -11,6 +11,10 @@
 #include <vector>
 #include <climits>
 
+#ifdef TESTER
+#include "gtest/gtest_prod.h"
+#endif
+
 namespace Graphics
 {
 
@@ -25,9 +29,24 @@ namespace Graphics
             {
             }
 
+            void Clear()
+            {
+                r = UCHAR_MAX;
+                g = UCHAR_MAX;
+                b = UCHAR_MAX;
+                z = UCHAR_MAX;
+            }
+
             ~Fragment()
             {
             }
+
+            Fragment(const Fragment &f)
+                :r(f.r), g(f.g), b(f.b), z(f.z)
+            {
+            }
+
+            friend std::ostream &operator<<(std::ostream &os, const Fragment &f);
     };
 
 
@@ -39,16 +58,15 @@ namespace Graphics
             ~Rasterizer(){}
 
             virtual void Draw(const Scene &scene);
+            void SetCamera(const Camera *camera);
 
         private:
             void OnCameraChange();
             void DrawLine(const Ray2D &line);
-            void DrawTriangle(const Triangle &t, std::vector<Fragment> &fragments);
+            void DrawTriangle(const Triangle &t, const Scene &scene);
 
-            UBYTE_RGB CalculateColor(const Math::Point3D &p, const Material &mat, 
+            RGB CalculateColor(const Math::Point3D &p, const Material &mat, 
                     const Scene &scene, const Math::Vector3D &n);
-            
-
             void DrawFragments(int x, int y, const UBYTE_RGB &urgb, int z);
 
 
@@ -62,5 +80,10 @@ namespace Graphics
 
             Math::Matrix44 m_camT;
             Math::Matrix44 m_camInverseT;
+
+#ifdef TESTER
+            friend class RasterizerTest;
+            FRIEND_TEST(RasterizerTest, OP);
+#endif
     };
 }

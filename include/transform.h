@@ -3,6 +3,19 @@
 #include "math/Matrix.h"
 #include "math/Point.h"
 
+/*
+ *                y
+ *                |
+ *                |
+ *                |
+ *                ------->x
+ *              -
+ *             -
+ *            -
+ *          z
+ *
+ * */
+
 namespace Graphics
 {
     class Transform{

@@ -7,9 +7,19 @@ TODO:
         2.use visitor pattern to reorganize the RayTracerSurfaceInterface
     
     feature:
-        1.sphere intersect test code and add sphere rendering
-        2.simple shadow
-        3.ideal specular reflection
-        4.camera moving
-        5.lua for configuration
-        6.complex model render 
+        common:
+            1.lua for configuration
+            2.complex model render 
+
+        raytracer::
+            1.sphere intersect test code and add sphere rendering
+            2.simple shadow
+            3.ideal specular reflection
+
+        rasterize:
+            1.clipping
+            2.texture-mapping
+            3.scane-line - zbuffer
+            4.per-fragment-shading
+            5.culling
+            6.simple anti-alising

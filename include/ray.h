@@ -76,10 +76,12 @@ namespace Graphics{
     typedef RayT<Math::Point3D, Math::Vector3D> Ray;
     typedef RayT<Math::Point4D, Math::Vector4D> RayHomogeneous;
 
-    inline float GetPointLineValue(const Math::Point2D &pStart, 
-            const Math::Point2D &pEnd, float x, float y)
+    inline float Get2DLineValue(
+            float pStartX, float pStartY, float pEndX, float pEndY,
+            float x, float y)
     {
-        return (pStart.y - pEnd.y) * x + (pEnd.x - pStart.x) * y + pEnd.x * pStart.y - pStart.x * pEnd.y;
+        return (pStartY - pEndY) * x + (pEndX - pStartX) * y 
+            - pEndX * pStartY + pStartX * pEndY;
     }
 
 }

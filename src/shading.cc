@@ -1,5 +1,6 @@
 #include "shading.h"
 #include "math/Vector.h"
+#include <cmath>
 
 using Math::Vector3D;
 
@@ -20,7 +21,7 @@ namespace Graphics
         h.Normalize();
         double costheta = Dot(n, h);
         costheta = (0 > costheta)?0:costheta;
-        return (k * i) * pow(costheta, factor);
+        return (k * i) * std::pow(costheta, factor);
     }
 
     RGB Shading::AmbientColor(const RGB &k, const RGB &i) 

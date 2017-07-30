@@ -41,7 +41,7 @@ namespace Graphics{
                 m_surfaces.push_back(surface);
             }
 
-            inline const std::vector<std::shared_ptr<Surface> > GetSurfaces() const{
+            inline const std::vector<std::shared_ptr<Surface>> &GetSurfaces() const{
                 return m_surfaces;
             }
 
@@ -49,6 +49,6 @@ namespace Graphics{
             DiffuseLight m_diffuseLight;
             std::vector<SpecularLight> m_specularLightList;
             AmbientLight m_ambientLight;
-            std::vector<std::shared_ptr<Surface> > m_surfaces;
+            std::vector<std::shared_ptr<Surface>> m_surfaces;
     };
 }

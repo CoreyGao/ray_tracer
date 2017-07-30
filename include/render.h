@@ -10,9 +10,13 @@ namespace Graphics{
     class Render
     {
         public:
+            virtual ~Render()
+            {
+            }
+
             virtual void Draw(const Scene &scene) = 0;
 
-            inline void SetCamera(const Camera *c)
+            virtual void SetCamera(const Camera *c)
             {
                 m_camera = c;
             }
